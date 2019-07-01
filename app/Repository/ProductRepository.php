@@ -45,19 +45,22 @@ class ProductRepository implements ProductInterface
 
     public function getFeaturedProduct()
     {
-        $product = ProductModel::where('featured', '1')->take(8)->get();
-        return $product;
+        $products = ProductModel::where('featured', '1')->take(8)->get();
+        return $products;
     }
 
     public function getSingleProductBySlug($slug)
     {
         $product = ProductModel::findOrFail($slug);
-        $productImage = ProductImages::where('fk_product_id', $slug)->get();
+        $productImage = $this->getProductGalleryImage($slug);
         $product->galleryImage = $productImage;
         $product->checkStock = $this->checkStock($slug);
         return $product;
     }
-
+    public function getProductGalleryImage($slug){
+        $productImage = ProductImages::where('fk_product_id', $slug)->get();
+        return $productImage;
+    }
     public function getProductByCategoryName($name)
     {
         $product = ProductModel::where('category_id',$name)->paginate(12);

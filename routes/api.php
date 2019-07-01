@@ -27,4 +27,13 @@ Route::group([
     Route::post('register', 'AuthController@register');
 });
 
-Route::post('product', 'AuthController@register');
+Route::post('products/best_seller', 'Api\ProductController@getBestSellerProducts');
+Route::post('products/featured', 'Api\ProductController@getFeaturedProduct');
+Route::post('products/single', 'Api\ProductController@getSingleProduct');
+Route::get('slider', 'Api\SliderController@getSlider');
+
+
+Route::get('cat', function (){
+    $cat = \App\Model\CategoryModel::where('id','4')->first();
+    return $cat->name;
+});

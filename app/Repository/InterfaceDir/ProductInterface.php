@@ -35,14 +35,25 @@ interface ProductInterface
     public function getProductByCategoryName($name);
 
     /*
-     * this tale id as input
+     * this take id as input
      * check the availablity in product table
      * return boolean
      */
 
     public function checkStock($id);
-
+    /*
+        * this tale product id as input
+        * check the availablity in product table
+        * if response return then user can not add the product to the cart
+        * return boolean
+        */
     public function preventAddToCart($id,$qty);
+
+    /*
+     * get all the product Gallery image using id as input
+     * return list of available images
+     */
+    public function getProductGalleryImage($slug);
 
 
 }

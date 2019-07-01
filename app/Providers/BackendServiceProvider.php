@@ -11,8 +11,10 @@ use App\Repository\InterfaceDir\CategoryInterface;
 use App\Repository\InterfaceDir\CheckoutInterface;
 use App\Repository\InterfaceDir\ContactUsInterface;
 use App\Repository\InterfaceDir\ProductInterface;
+use App\Repository\InterfaceDir\SliderInterface;
 use App\Repository\InterfaceDir\UserInterface;
 use App\Repository\ProductRepository;
+use App\Repository\SliderRepository;
 use App\Repository\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +32,7 @@ class BackendServiceProvider extends ServiceProvider
         $this->app->bind(ContactUsInterface::class,ContactUsRepository::class);
         $this->app->bind(CheckoutInterface::class,CheckoutRepository::class);
         $this->app->bind(UserInterface::class,UserRepository::class);
+        $this->app->bind(SliderInterface::class,SliderRepository::class);
     }
 
     /**

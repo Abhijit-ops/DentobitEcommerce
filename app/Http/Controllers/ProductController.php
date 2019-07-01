@@ -32,4 +32,5 @@ class ProductController extends Controller
         return view('products.productList')->with('products',$product)->with('categoryName',$category->name);
     }
 
+
 }
