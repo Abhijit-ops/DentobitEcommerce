@@ -1,0 +1,41 @@
+ul.mega-menu.clearfix {
+    background: #fff !important;
+}
+
+.product-item{
+    box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+::-moz-selection {
+    background-color: #40b87c;
+    color: #fff !important;
+}
+
+::selection {
+    background-color: #40b87c;
+    color: #fff !important;
+}
+
+a.dropdown-item{
+    line-height: 20px;
+    font-size: 14px !important;
+    font-weight: 400;
+}
+
+.header-section .digital-header .header-middle .three-btn-group .wishlist-cart-btn ul li a:hover{
+    color: #40b87c;
+}
+
+.user_dashboard>li{
+    list-style: none;
+    border: 1px solid #efefef;
+
+}
+.user_dashboard>li>a{
+    font-weight: 400!important;
+    /*padding: 5px 80px 5px 80px;*/
+}
+.user_dashboard>li>a:hover{
+    color: #000;
+    overflow: hidden;
+}
