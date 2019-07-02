@@ -26,14 +26,20 @@ Route::group([
     Route::post('me', 'AuthController@me');
     Route::post('register', 'AuthController@register');
 });
+/*
+ * Product Routes
+ */
 
 Route::post('products/best_seller', 'Api\ProductController@getBestSellerProducts');
 Route::post('products/featured', 'Api\ProductController@getFeaturedProduct');
 Route::post('products/single', 'Api\ProductController@getSingleProduct');
 Route::get('slider', 'Api\SliderController@getSlider');
+/*
+ * Category Routes
+ */
+Route::post('category/all', 'Api\CategoryController@getCaegory');
 
-
-Route::get('cat', function (){
-    $cat = \App\Model\CategoryModel::where('id','4')->first();
+Route::get('cat', function () {
+    $cat = \App\Model\CategoryModel::where('id', '4')->first();
     return $cat->name;
 });

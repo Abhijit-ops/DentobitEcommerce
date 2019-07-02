@@ -67,21 +67,21 @@
                             <div class="search-form">
                                 <form action="#!">
 
-                                    <input type="search" placeholder="Search for product...">
+                                    <input type="text" autocomplete="off" id="search"  placeholder="Enter product Name">
                                     <button type="submit" class="search-btn"><i class="flaticon-search"></i></button>
 
-                                    <select class="categories-select">
-                                        <option>All Categories</option>
-                                        @foreach($navigationCategory as $category)
-                                            <optgroup label="- {{$category->name}}">
-                                                @if($category->subcategoryName != null)
-                                                    @foreach($category->subcategoryName as $subCategory)
-                                                       <option>{{$subCategory->name}}</option>
-                                                    @endforeach
-                                                @endif
-                                            </optgroup>
-                                        @endforeach
-                                    </select>
+                                    {{--<select class="categories-select">--}}
+                                        {{--<option>All Categories</option>--}}
+                                        {{--@foreach($navigationCategory as $category)--}}
+                                            {{--<optgroup label="- {{$category->name}}">--}}
+                                                {{--@if($category->subcategoryName != null)--}}
+                                                    {{--@foreach($category->subcategoryName as $subCategory)--}}
+                                                       {{--<option>{{$subCategory->name}}</option>--}}
+                                                    {{--@endforeach--}}
+                                                {{--@endif--}}
+                                            {{--</optgroup>--}}
+                                        {{--@endforeach--}}
+                                    {{--</select>--}}
 
                                 </form>
                             </div>

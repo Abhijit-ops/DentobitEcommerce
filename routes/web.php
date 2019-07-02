@@ -65,8 +65,4 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
-Route::get('test',function (){
-    $snake = str_slug('Determine if the given haystack ends with a given needle.');
-    return $snake;
-});
-
+Route::get('search/autocompleteajax','SearchController@search')->name('search.products');
