@@ -54,6 +54,12 @@ interface ProductInterface
      * return list of available images
      */
     public function getProductGalleryImage($slug);
+        /*
+         * get new arrival Product from the product table
+         */
+    public function getNewArriValProduct();
+
+
 
 
 }

@@ -32,12 +32,14 @@ class HomeController extends Controller
 
         $bestSellerProducts = $this->product->getHomeBestSellerProduct('bestSeller');
         $featuredProduct = $this->product->getFeaturedProduct();
+        $newArrival = $this->product->getNewArriValProduct();
         return view('index')
             ->with('bestSellerProducts',$bestSellerProducts)
-            ->with('featuredProducts',$featuredProduct);
+            ->with('featuredProducts',$featuredProduct)
+            ->with('newArrivalProducts',$newArrival);
     }
 
     public function getTest($name){
-        return $this->getBrandNameByCategory($name);
+        return $name;
     }
 }

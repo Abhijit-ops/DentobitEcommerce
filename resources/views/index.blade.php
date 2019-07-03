@@ -69,7 +69,7 @@
                         <div class="content">
                             <h3>Free Shipping</h3>
                             <p class="m-0">
-                                Free Shipping On All Order Or Order above $100
+                                Free Shipping On Order above  1000৳ Inside Dhaka City
                             </p>
                         </div>
                     </li>
@@ -79,9 +79,9 @@
 								<i class="flaticon-money-bag"></i>
 							</span>
                         <div class="content">
-                            <h3>100% Money Guarantee</h3>
+                            <h3>Product Replacement</h3>
                             <p class="m-0">
-                                Simply Return it With 30 Days For an Exchange.
+                                 Return it With 7 Days For an Exchange.
                             </p>
 
                         </div>
@@ -106,7 +106,7 @@
                         <div class="content">
                             <h3>Payment Method</h3>
                             <p class="m-0">
-                                We Ensure Secure Payment With PEV
+                                We Ensure Secure Payment With Bkash
                             </p>
                         </div>
                     </li>
@@ -168,7 +168,7 @@
                 <ul class="nav digital-featured-nav">
                     <li><a class="active" data-toggle="tab" href="#featured">featured</a></li>
                     <li><a data-toggle="tab" href="#best-seller">Best Seller</a></li>
-                    <li><a data-toggle="tab" href="#top-rated">Top Rated</a></li>
+                    <li><a data-toggle="tab" href="#top-rated">New Arrival</a></li>
                 </ul>
             </div>
 
@@ -177,15 +177,17 @@
                 <div id="featured" class="tab-pane fade in active show">
                     <div class="container">
                         <div class="row">
+
                             @foreach($featuredProducts as $featuredProduct)
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="product-item">
+                                    @if($featuredProduct->discount!=null)
                                     <div class="post-labels">
                                         <ul class="clearfix">
-                                            <li class="bg-primary">new</li>
-                                            <li class="bg-danger">-50%</li>
+                                            <li class="bg-danger">{{$featuredProduct->discount}}</li>
                                         </ul>
                                     </div>
+                                    @endif
                                     <div class="image-container">
                                         <img src="{{$featuredProduct->image}}" alt="{{$featuredProduct->name}}">
                                         <a href="{{route('products.single',[$featuredProduct->id])}}" class="quick-view">
@@ -208,6 +210,7 @@
                                                 <li><a href="#!" class="color-3"></a></li>
                                             </ul>
                                         </div>
+                                        @if($featuredProduct->checkStock!="Out Of Stock")
                                         <form>
                                             @csrf
                                             <input type="hidden" value="{{$featuredProduct->name}}" name="name" id="name_{{$featuredProduct->id}}">
@@ -220,6 +223,12 @@
                                                 add to cart
                                             </button>
                                         </form>
+                                        @else
+                                            <button class="add-to-cart-danger" type="button" >
+                                                <i class="flaticon-shopper"></i>
+                                                Out Of Stock
+                                            </button>
+                                        @endif
                                         <div class="product-meta ul-li-center">
                                             <ul class="clearfix">
                                                 <li><a href="#!"><i class="flaticon-heart"></i></a></li>
@@ -245,7 +254,6 @@
                                 <div class="product-item">
                                     <div class="post-labels">
                                         <ul class="clearfix">
-                                            <li class="bg-primary">{{$bestSeller->checkStock}}</li>
                                             <li class="bg-success">best seller</li>
                                         </ul>
                                     </div>
@@ -309,26 +317,28 @@
                 <div id="top-rated" class="tab-pane fade">
                     <div class="container">
                         <div class="row">
-
+                            @foreach($newArrivalProducts as $item)
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="product-item">
-                                    <div class="post-labels">
-                                        <ul class="clearfix">
-                                            <li class="bg-danger">-50%</li>
-                                        </ul>
-                                    </div>
+                                    @if($item->discount!=null)
+                                        <div class="post-labels">
+                                            <ul class="clearfix">
+                                                <li class="bg-danger">{{$featuredProduct->discount}}</li>
+                                            </ul>
+                                        </div>
+                                    @endif
                                     <div class="image-container">
-                                        <img src="assets/images/featured/digital/digital-1.jpg" alt="image_not_found">
-                                        <a href="#!" class="quick-view">
+                                        <img src="{{$item->image}}" alt="image_not_found">
+                                        <a href="{{route('products.single',[$item->id])}}" class="quick-view">
                                             <i class="fas fa-eye"></i>
                                             quick view
                                         </a>
                                     </div>
                                     <div class="item-content text-center">
-                                        <a href="#!" class="item-title"> Sound P6 Stereo Headphones</a>
+                                        <a href="{{route('products.single',[$item->id])}}" class="item-title">{{$item->name}}</a>
                                         <div class="item-price">
-                                            <strong class="color-black">$129.00</strong>
-                                            <del>$359.00</del>
+                                            <strong class="color-black">{{$item->price}}</strong>
+                                            <del>{{$item->price}}</del>
                                         </div>
                                     </div>
                                     <div class="hover-content">
@@ -339,10 +349,25 @@
                                                 <li><a href="#!" class="color-3"></a></li>
                                             </ul>
                                         </div>
-                                        <a href="#!" class="add-to-cart">
-                                            <i class="flaticon-shopping-basket"></i>
-                                            add to cart
-                                        </a>
+                                        @if($item->checkStock!="Out Of Stock")
+                                        <form>
+                                            @csrf
+                                            <input type="hidden" value="{{$item->name}}" name="name" id="name_{{$item->id}}">
+                                            <input type="hidden" value="{{$item->image}}" name="imgages" id="imgages_{{$item->id}}">
+                                            <input type="hidden" value="{{$item->id}}" name="id" id="p_id_{{$item->id}}">
+                                            <input type="hidden" value="{{$item->price}}" name="price" id="price_{{$item->id}}">
+                                            <input type="hidden" value="1" name="qty" id="qty_{{$item->id}}">
+                                            <button class="add-to-cart"  data-panel-id="{{$item->id}}" onclick="storeToCart(this)"  type="button" >
+                                                <i class="flaticon-shopper"></i>
+                                                add to cart
+                                            </button>
+                                        </form>
+                                        @else
+                                            <button class="add-to-cart-danger" type="button" >
+                                                <i class="flaticon-shopper"></i>
+                                                Out Of Stock
+                                            </button>
+                                        @endif
                                         <div class="product-meta ul-li-center">
                                             <ul class="clearfix">
                                                 <li><a href="#!"><i class="flaticon-heart"></i></a></li>
@@ -353,137 +378,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-12">
-                                <div class="product-item">
-                                    <div class="post-labels">
-                                        <ul class="clearfix">
-                                            <li class="bg-primary">new</li>
-                                            <li class="bg-danger">-50%</li>
-                                        </ul>
-                                    </div>
-                                    <div class="image-container">
-                                        <img src="assets/images/featured/digital/digital-2.jpg" alt="image_not_found">
-                                        <a href="#!" class="quick-view">
-                                            <i class="fas fa-eye"></i>
-                                            quick view
-                                        </a>
-                                    </div>
-                                    <div class="item-content text-center">
-                                        <a href="#!" class="item-title">Smartphone 7 Plus 128GB Silver MN492</a>
-                                        <div class="item-price">
-                                            <strong class="color-black">$129.00</strong>
-                                            <del>$359.00</del>
-                                        </div>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="color-options ul-li-center mb-15">
-                                            <ul>
-                                                <li><a href="#!" class="color-1"></a></li>
-                                                <li><a href="#!" class="color-2"></a></li>
-                                                <li><a href="#!" class="color-3"></a></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#!" class="add-to-cart">
-                                            <i class="flaticon-shopping-basket"></i>
-                                            add to cart
-                                        </a>
-                                        <div class="product-meta ul-li-center">
-                                            <ul class="clearfix">
-                                                <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                                <li><a href="#!"><i class="flaticon-libra"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-12">
-                                <div class="product-item">
-                                    <div class="post-labels">
-                                        <ul class="clearfix">
-                                            <li class="bg-danger">-50%</li>
-                                        </ul>
-                                    </div>
-                                    <div class="image-container">
-                                        <img src="assets/images/featured/digital/digital-3.jpg" alt="image_not_found">
-                                        <a href="#!" class="quick-view">
-                                            <i class="fas fa-eye"></i>
-                                            quick view
-                                        </a>
-                                    </div>
-                                    <div class="item-content text-center">
-                                        <a href="#!" class="item-title"> Acer Aspire E 15.6" Core i3 Laptop</a>
-                                        <div class="item-price">
-                                            <strong class="color-black">$129.00</strong>
-                                            <del>$359.00</del>
-                                        </div>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="color-options ul-li-center mb-15">
-                                            <ul>
-                                                <li><a href="#!" class="color-1"></a></li>
-                                                <li><a href="#!" class="color-2"></a></li>
-                                                <li><a href="#!" class="color-3"></a></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#!" class="add-to-cart">
-                                            <i class="flaticon-shopping-basket"></i>
-                                            add to cart
-                                        </a>
-                                        <div class="product-meta ul-li-center">
-                                            <ul class="clearfix">
-                                                <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                                <li><a href="#!"><i class="flaticon-libra"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-12">
-                                <div class="product-item">
-                                    <div class="post-labels">
-                                        <ul class="clearfix">
-                                            <li class="bg-primary">new</li>
-                                            <li class="bg-success">best seller</li>
-                                        </ul>
-                                    </div>
-                                    <div class="image-container">
-                                        <img src="assets/images/featured/digital/digital-4.jpg" alt="image_not_found">
-                                        <a href="#!" class="quick-view">
-                                            <i class="fas fa-eye"></i>
-                                            quick view
-                                        </a>
-                                    </div>
-                                    <div class="item-content text-center">
-                                        <a href="#!" class="item-title">Smartphone 7 Plus 128GB Silver MN492</a>
-                                        <div class="item-price">
-                                            <strong class="color-black">$129.00</strong>
-                                            <del>$359.00</del>
-                                        </div>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="color-options ul-li-center mb-15">
-                                            <ul>
-                                                <li><a href="#!" class="color-1"></a></li>
-                                                <li><a href="#!" class="color-2"></a></li>
-                                                <li><a href="#!" class="color-3"></a></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#!" class="add-to-cart">
-                                            <i class="flaticon-shopping-basket"></i>
-                                            add to cart
-                                        </a>
-                                        <div class="product-meta ul-li-center">
-                                            <ul class="clearfix">
-                                                <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                                <li><a href="#!"><i class="flaticon-libra"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                                @endforeach
                         </div>
                     </div>
                 </div>
@@ -660,497 +555,7 @@
 
 
 
-    <!-- trending-section - start
-    ================================================== -->
-    <section id="trending-section" class="trending-section sec-ptb-60 clearfix">
-        <div class="container">
-            <div class="row justify-content-md-center">
 
-                <!-- onsale-product - start -->
-                <div class="col-lg-4 col-md-8 col-sm-12">
-                    <div class="onsale-product">
-                        <div class="section-title">
-                            <h2>on sale</h2>
-                        </div>
-                        <div id="onsale-product-carousel" class="onsale-product-carousel owl-carousel owl-theme">
-
-                            <div class="item text-center">
-                                <div class="post-labels">
-                                    <ul class="clearfix">
-                                        <li class="bg-danger">-50%</li>
-                                    </ul>
-                                </div>
-                                <div class="image-container mb-15">
-                                    <img src="{{asset('images/on-sale/digital/img-1.jpg')}}" alt="image_not_found">
-                                </div>
-                                <a href="#!" class="item-title mb-15">Acer Aspire E 15.6" Core i3 Laptop</a>
-                                <div class="item-price">
-                                    <strong class="color-black">$129.00</strong>
-                                    <del>$359.00</del>
-                                </div>
-                            </div>
-
-                            <div class="item text-center">
-                                <div class="post-labels">
-                                    <ul class="clearfix">
-                                        <li class="bg-primary">new</li>
-                                        <li class="bg-danger">-50%</li>
-                                    </ul>
-                                </div>
-                                <div class="image-container mb-15">
-                                    <img src="{{asset('images/on-sale/digital/img-1.jpg')}}" alt="image_not_found">
-                                </div>
-                                <a href="#!" class="item-title mb-15">Acer Aspire E 15.6" Core i3 Laptop</a>
-                                <div class="item-price">
-                                    <strong class="color-black">$129.00</strong>
-                                    <del>$359.00</del>
-                                </div>
-                            </div>
-
-                            <div class="item text-center">
-                                <div class="post-labels">
-                                    <ul class="clearfix">
-                                        <li class="bg-primary">new</li>
-                                        <li class="bg-danger">-50%</li>
-                                    </ul>
-                                </div>
-                                <div class="image-container mb-15">
-                                    <img src="{{asset('images/on-sale/digital/img-1.jpg')}}" alt="image_not_found">
-                                </div>
-                                <a href="#!" class="item-title mb-15">Acer Aspire E 15.6" Core i3 Laptop</a>
-                                <div class="item-price">
-                                    <strong class="color-black">$129.00</strong>
-                                    <del>$359.00</del>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- onsale-product - end -->
-
-                <!-- products-tab - start -->
-                <div class="col-lg-8 col-md-12 col-sm-12">
-                    <div class="products-tab">
-
-                        <div class="products-tab-nav ul-li-right">
-                            <div class="section-title">
-                                <h2>new arrivals</h2>
-                            </div>
-                            <ul class="nav">
-                                <li><a class="active" data-toggle="tab" href="#all">all</a></li>
-                                <li><a data-toggle="tab" href="#audio-video">audio & video</a></li>
-                                <li><a data-toggle="tab" href="#smartphone">smartphone</a></li>
-                                <li><a data-toggle="tab" href="#headphone">headphone</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="tab-content">
-                            <div id="all" class="tab-pane fade in active show">
-                                <div class="row">
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                    <li class="bg-success">best seller</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Galaxy Note8 Deepsea Blue will be
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Wireless Audio - 360 Speaker
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Samsung Gear 360 Spherical VR Camera
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Smartphone 7 Plus 128GB
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div id="audio-video" class="tab-pane fade">
-                                <div class="row">
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                    <li class="bg-success">best seller</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Galaxy Note8 Deepsea Blue will be
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Wireless Audio - 360 Speaker
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Samsung Gear 360 Spherical VR Camera
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Smartphone 7 Plus 128GB
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div id="smartphone" class="tab-pane fade">
-                                <div class="row">
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                    <li class="bg-success">best seller</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Galaxy Note8 Deepsea Blue will be
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Wireless Audio - 360 Speaker
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Samsung Gear 360 Spherical VR Camera
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Smartphone 7 Plus 128GB
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div id="headphone" class="tab-pane fade">
-                                <div class="row">
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                    <li class="bg-success">best seller</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Galaxy Note8 Deepsea Blue will be
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Wireless Audio - 360 Speaker
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-danger">-50%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Samsung Gear 360 Spherical VR Camera
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="product-item">
-                                            <div class="post-labels">
-                                                <ul class="clearfix">
-                                                    <li class="bg-primary">new</li>
-                                                </ul>
-                                            </div>
-                                            <div class="image-container">
-                                                <img src="{{asset('images/on-sale/digital/img-1.jpg')}}"
-                                                     alt="image_not_found">
-                                            </div>
-                                            <div class="product-content">
-                                                <a href="#!" class="product-title">
-                                                    Smartphone 7 Plus 128GB
-                                                </a>
-                                                <div class="item-price">
-                                                    <strong class="color-black">$129.00</strong>
-                                                    <del>$359.00</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- products-tab - end -->
-
-            </div>
-        </div>
-    </section>
-    <!-- trending-section - end
-    ================================================== -->
 
 
 
@@ -1160,166 +565,6 @@
 
 
 
-
-
-    <!-- popular-section - start
-    ================================================== -->
-    <section id="popular-section" class="popular-section sec-ptb-60 clearfix">
-        <div class="most-viewde-products">
-            <div class="container">
-
-                <!-- section-title - start -->
-                <div class="section-title">
-                    <h2>most viewed products</h2>
-                </div>
-                <!-- section-title - end -->
-
-                <div class="row">
-                    <!-- most-viewde-item - start -->
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="most-viewde-item text-center">
-                            <div class="image-container mb-15">
-                                <img src="{{asset('images/most-viewed/digital/img-1.jpg')}}" alt="image_not_found">
-                                <div class="absolute-cartview bg-royal-blue">
-                                    <ul>
-                                        <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                        <li><a href="#!"><i class="fas fa-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <a href="#!" class="item-title mb-15 color-royal-blue">Samsung Gear Camera</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- most-viewde-item - end -->
-
-                    <!-- most-viewde-item - start -->
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="most-viewde-item text-center">
-                            <div class="image-container mb-15">
-                                <img src="{{asset('images/most-viewed/digital/img-1.jpg')}}" alt="image_not_found">
-                                <div class="absolute-cartview bg-royal-blue">
-                                    <ul>
-                                        <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                        <li><a href="#!"><i class="fas fa-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <a href="#!" class="item-title mb-15 color-royal-blue">Acer Aspire E 15.6" Laptop</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- most-viewde-item - end -->
-
-                    <!-- most-viewde-item - start -->
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="most-viewde-item text-center">
-                            <div class="image-container mb-15">
-                                <img src="{{asset('images/most-viewed/digital/img-1.jpg')}}" alt="image_not_found">
-                                <div class="absolute-cartview bg-royal-blue">
-                                    <ul>
-                                        <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                        <li><a href="#!"><i class="fas fa-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <a href="#!" class="item-title mb-15 color-royal-blue">Wireless Audio - 360 Speaker</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- most-viewde-item - end -->
-
-                    <!-- most-viewde-item - start -->
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="most-viewde-item text-center">
-                            <div class="image-container mb-15">
-                                <img src="{{asset('images/most-viewed/digital/img-1.jpg')}}" alt="image_not_found">
-                                <div class="absolute-cartview bg-royal-blue">
-                                    <ul>
-                                        <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                        <li><a href="#!"><i class="fas fa-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <a href="#!" class="item-title mb-15 color-royal-blue">Android Wear 2.0, LG Watch Sport
-                                (White)</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- most-viewde-item - end -->
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- popular-section - end
-    ================================================== -->
-
-
-
-
-
-    <!-- brand-logo-section - start
-    ================================================== -->
-    <div id="brand-logo-section" class="brand-logo-section clearfix">
-        <div class="digital-brandlogo">
-            <div class="container">
-                <div id="brand-logo-carousel" class="brand-logo-carousel owl-carousel owl-theme">
-
-                    <div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div>
-                    <div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div>
-                    <div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div>
-                    <div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div>
-                    <div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div>
-                    <div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div><div class="item">
-                        <a href="#!"><span><img src="{{asset('images/brand/logo-1.png')}}" alt="image_not_found"></span></a>
-                    </div>
-
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- brand-logo-section - end
-    ================================================== -->
 
 
 
@@ -1332,20 +577,20 @@
 
             <!-- section-title - start -->
             <div class="section-title mb-0">
-                <h2>top categories this week</h2>
+                <h2>Top Brands</h2>
             </div>
             <!-- section-title - end -->
 
             <div class="digital-category-post">
                 <div class="row">
-                @foreach($navigationCategory as $category)
+                @foreach($topBrands as $topBrand)
                     <!-- post-item - start -->
                         <div class="col-lg-3 col-md-4 col-sm-12">
                             <div class="post-item">
-                                <a href="#!" class="item-img">
+                                <a href="{{route('productBy.brandName',[$topBrand->name])}}" class="item-img">
                                     <img src="{{asset('images/top-category/digital/img-1.jpg')}}" alt="image_not_found">
                                 </a>
-                                <span class="post-item-title">{{$category->name}}</span>
+                                <span class="post-item-title">{{$topBrand->name}}</span>
                             </div>
                         </div>
                         <!-- post-item - end -->

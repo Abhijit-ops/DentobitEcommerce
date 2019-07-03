@@ -11,7 +11,7 @@ class CartRepository implements CartInterface
         $image = $data['imgages'];
         $id = $data['id'];
         $qty = $data['qty'];
-        $index = null;
+        $index = '0.00';
         Cart::add(array('id'=>$id,'name'=>$name,'qty' => $qty,'price' => $price, 'weight'=>$index,'options' => ['image' =>$image ]));
         return response()->json(Cart::content());
     }

@@ -339,7 +339,7 @@
                 '<div class="list_item_container"><div class="image">' +
                 '<img src="' + item.image + '" >' +
                 '</div>' +
-                '<div><p>' +
+                '<div class="label"><p>' +
                 '<p>' + item.name + '</p>' +
                 '</p>' +
                 '</div>' +
@@ -353,6 +353,9 @@
     });
 </script>
 <style>
+    label{
+        color: #000 !important;
+    }
     .ui-state-active p,
     .ui-state-active p:visited {
         color: #26004d !important; ;

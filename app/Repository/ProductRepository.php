@@ -46,6 +46,10 @@ class ProductRepository implements ProductInterface
     public function getFeaturedProduct()
     {
         $products = ProductModel::where('featured', '1')->take(8)->get();
+        foreach ($products as $product)
+        {
+            $product->checkStock = $this->checkStock($product->id);
+        }
         return $products;
     }
 
@@ -89,5 +93,17 @@ class ProductRepository implements ProductInterface
         }
 
     }
+
+
+    public function getNewArriValProduct()
+    {
+       $products = ProductModel::orderBy('id','Desc')->take(8)->get();
+       foreach ($products as $product)
+       {
+           $product->checkStock = $this->checkStock($product->id);
+       }
+       return $products;
+    }
+
 
 }

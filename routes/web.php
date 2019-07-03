@@ -43,6 +43,7 @@ Route::get('/cart/remove-all','CartController@deleteCartContent')->name('cart.re
  */
 
 Route::get('/product/category/{name}', 'ProductController@getProductByCategoryName')->name('productBy.catName');
+Route::get('/product/brand/{brandName}', 'ProductController@getProductByBrandName')->name('productBy.brandName');
 
 /*
  * CheckOut Routes Start

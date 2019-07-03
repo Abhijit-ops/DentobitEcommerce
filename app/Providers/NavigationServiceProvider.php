@@ -20,6 +20,7 @@ class NavigationServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $view->with('navigationCategory', $this->getCaegory());
             $view->with('sidenNavBrandCount', $this->getBrandNameByCategory());
+            $view->with('topBrands', $this->getAllBrands());
         });
     }
 

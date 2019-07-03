@@ -31,8 +31,14 @@ trait BrandTrait
     public function getBrandNameById($id){
         $brand = BrandModel::where('id',$id)->first();
             return $brand->name;
-
     }
 
+    public function getBrandIdByName($name){
+        $brand = BrandModel::where('name',$name)->first();
+        return $brand->id;
+    }
+    public function getAllBrands(){
+        return BrandModel::all();
+    }
 
 }
