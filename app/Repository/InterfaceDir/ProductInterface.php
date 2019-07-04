@@ -59,7 +59,10 @@ interface ProductInterface
          */
     public function getNewArriValProduct();
 
+/*
+ * return random product from the same category
+ */
 
-
+public function getRelatedProduct($id);
 
 }

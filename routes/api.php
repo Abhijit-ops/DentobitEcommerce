@@ -43,3 +43,5 @@ Route::get('cat', function () {
     $cat = \App\Model\CategoryModel::where('id', '4')->first();
     return $cat->name;
 });
+
+Route::post('phone/save', 'CustomerTestController@saveCustomer');

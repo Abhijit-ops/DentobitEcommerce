@@ -10,6 +10,7 @@ use App\Model\ProductModel;
 use App\Repository\InterfaceDir\ProductInterface;
 use App\Traits\CategoryTrait;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductInterface
@@ -30,7 +31,7 @@ class ProductRepository implements ProductInterface
     {
         $productArray = [];
         $orderItems = OrderDetailsModel::select('product_id', DB::raw('count(*) as total'))
-            ->groupBy('product_id')->orderBy('total', 'desc')->take(10)->get();
+            ->groupBy('product_id')->orderBy('total', 'desc')->take(8)->get();
         foreach ($orderItems as $orderItem) {
             $product = ProductModel::where('id', $orderItem->product_id)->first();
             $orderItem->catName = $this->getCategoryName($orderItem->product_id);
@@ -59,6 +60,7 @@ class ProductRepository implements ProductInterface
         $productImage = $this->getProductGalleryImage($slug);
         $product->galleryImage = $productImage;
         $product->checkStock = $this->checkStock($slug);
+        $product->relatedProduct=$this->getRelatedProduct($product->category_id);
         return $product;
     }
     public function getProductGalleryImage($slug){
@@ -105,5 +107,13 @@ class ProductRepository implements ProductInterface
        return $products;
     }
 
+    public function getProductByBrandName($columnName,$status){
+            return $this->getProductByColumnName('brand_id',$status);
+    }
+public function getRelatedProduct($id)
+{
+    $product= ProductModel::where('category_id', $id)->inRandomOrder()->limit(4)->get();
+    return $product;
+}
 
 }

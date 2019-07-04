@@ -277,27 +277,27 @@
                         <h2>related products</h2>
                     </div>
                 </div>
-
+                @foreach($product->relatedProduct as $product)
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="product-item">
                         <div class="post-labels">
                             <ul class="clearfix">
-                                <li class="bg-primary">new</li>
-                                <li class="bg-danger">-50%</li>
+                                {{--<li class="bg-primary">new</li>--}}
+                                {{--<li class="bg-danger">-50%</li>--}}
                             </ul>
                         </div>
                         <div class="image-container">
-                            <img src="assets/images/featured/fashion/img-2.jpg" alt="image_not_found">
-                            <a href="#!" class="quick-view">
+                            <img src="{{$product->image}}" alt="image_not_found">
+                            <a href="{{route('products.single',[$product->id])}}" class="quick-view">
                                 <i class="fas fa-eye"></i>
                                 quick view
                             </a>
                         </div>
                         <div class="item-content text-center">
-                            <a href="#!" class="item-title">Smartphone 7 Plus 128GB Silver MN492</a>
+                            <a href="{{route('products.single',[$product->id])}}" class="item-title">{{$product->name}}</a>
                             <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
+                                <strong class="color-black">{{$product->price}}</strong>
+                                <del>{{$product->price}}</del>
                             </div>
                         </div>
                         <div class="hover-content">
@@ -308,10 +308,25 @@
                                     <li><a href="#!" class="color-3"></a></li>
                                 </ul>
                             </div>
-                            <a href="#!" class="add-to-cart">
-                                <i class="flaticon-shopping-basket"></i>
-                                add to cart
-                            </a>
+                            @if($product->checkStock!="Out Of Stock")
+                                <form>
+                                    @csrf
+                                    <input type="hidden" value="{{$product->name}}" name="name" id="name_{{$product->id}}">
+                                    <input type="hidden" value="{{$product->image}}" name="imgages" id="imgages_{{$product->id}}">
+                                    <input type="hidden" value="{{$product->id}}" name="id" id="p_id_{{$product->id}}">
+                                    <input type="hidden" value="{{$product->price}}" name="price" id="price_{{$product->id}}">
+                                    <input type="hidden" value="1" name="qty" id="qty_{{$product->id}}">
+                                    <button class="add-to-cart"  data-panel-id="{{$product->id}}" onclick="storeToCart(this)"  type="button" >
+                                        <i class="flaticon-shopper"></i>
+                                        add to cart
+                                    </button>
+                                </form>
+                            @else
+                                <button class="add-to-cart-danger" type="button" >
+                                    <i class="flaticon-shopper"></i>
+                                    Out Of Stock
+                                </button>
+                            @endif
                             <div class="product-meta ul-li-center">
                                 <ul class="clearfix">
                                     <li><a href="#!"><i class="flaticon-heart"></i></a></li>
@@ -321,136 +336,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="product-item">
-                        <div class="post-labels">
-                            <ul class="clearfix">
-                                <li class="bg-danger">-50%</li>
-                            </ul>
-                        </div>
-                        <div class="image-container">
-                            <img src="assets/images/featured/fashion/img-4.jpg" alt="image_not_found">
-                            <a href="#!" class="quick-view">
-                                <i class="fas fa-eye"></i>
-                                quick view
-                            </a>
-                        </div>
-                        <div class="item-content text-center">
-                            <a href="#!" class="item-title"> Acer Aspire E 15.6" Core i3 Laptop</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                        <div class="hover-content">
-                            <div class="color-options ul-li-center mb-15">
-                                <ul>
-                                    <li><a href="#!" class="color-1"></a></li>
-                                    <li><a href="#!" class="color-2"></a></li>
-                                    <li><a href="#!" class="color-3"></a></li>
-                                </ul>
-                            </div>
-                            <a href="#!" class="add-to-cart">
-                                <i class="flaticon-shopping-basket"></i>
-                                add to cart
-                            </a>
-                            <div class="product-meta ul-li-center">
-                                <ul class="clearfix">
-                                    <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                    <li><a href="#!"><i class="flaticon-libra"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="product-item">
-                        <div class="post-labels">
-                            <ul class="clearfix">
-                                <li class="bg-primary">new</li>
-                                <li class="bg-success">best seller</li>
-                            </ul>
-                        </div>
-                        <div class="image-container">
-                            <img src="assets/images/featured/fashion/img-5.jpg" alt="image_not_found">
-                            <a href="#!" class="quick-view">
-                                <i class="fas fa-eye"></i>
-                                quick view
-                            </a>
-                        </div>
-                        <div class="item-content text-center">
-                            <a href="#!" class="item-title"> Apple 128GB iPad mini 4</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                        <div class="hover-content">
-                            <div class="color-options ul-li-center mb-15">
-                                <ul>
-                                    <li><a href="#!" class="color-1"></a></li>
-                                    <li><a href="#!" class="color-2"></a></li>
-                                    <li><a href="#!" class="color-3"></a></li>
-                                </ul>
-                            </div>
-                            <a href="#!" class="add-to-cart">
-                                <i class="flaticon-shopping-basket"></i>
-                                add to cart
-                            </a>
-                            <div class="product-meta ul-li-center">
-                                <ul class="clearfix">
-                                    <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                    <li><a href="#!"><i class="flaticon-libra"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="product-item">
-                        <div class="post-labels">
-                            <ul class="clearfix">
-                                <li class="bg-danger">-50%</li>
-                            </ul>
-                        </div>
-                        <div class="image-container">
-                            <img src="assets/images/featured/fashion/img-7.jpg" alt="image_not_found">
-                            <a href="#!" class="quick-view">
-                                <i class="fas fa-eye"></i>
-                                quick view
-                            </a>
-                        </div>
-                        <div class="item-content text-center">
-                            <a href="#!" class="item-title"> Sound  P6 Stereo Headphones</a>
-                            <div class="item-price">
-                                <strong class="color-black">$129.00</strong>
-                                <del>$359.00</del>
-                            </div>
-                        </div>
-                        <div class="hover-content">
-                            <div class="color-options ul-li-center mb-15">
-                                <ul>
-                                    <li><a href="#!" class="color-1"></a></li>
-                                    <li><a href="#!" class="color-2"></a></li>
-                                    <li><a href="#!" class="color-3"></a></li>
-                                </ul>
-                            </div>
-                            <a href="#!" class="add-to-cart">
-                                <i class="flaticon-shopping-basket"></i>
-                                add to cart
-                            </a>
-                            <div class="product-meta ul-li-center">
-                                <ul class="clearfix">
-                                    <li><a href="#!"><i class="flaticon-heart"></i></a></li>
-                                    <li><a href="#!"><i class="flaticon-libra"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
 
             </div>
         </div>

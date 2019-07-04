@@ -403,6 +403,10 @@
         height: 500px;
         overflow-y: scroll;
     }
+    .product-item .item-content {
+        padding: 15px;
+        height: 150px;
+    }
 </style>
 @yield('js')
 </body>

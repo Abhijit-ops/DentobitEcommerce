@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\CategoryModel;
+use App\Model\ProductModel;
 use App\Repository\InterfaceDir\ProductInterface;
 use App\Traits\BrandTrait;
 use Illuminate\Http\Request;
@@ -35,8 +36,8 @@ class ProductController extends Controller
     }
     public function getProductByBrandName($brandName){
         $brandId = $this->getBrandIdByName($brandName);
-        $product = $this->product->getProductBycolumnName('brand_id',$brandId);
-        return $product;
+        $product = $product = ProductModel::where('brand_id', $brandId)->paginate(16);
+        return view('products.productListByBrand')->with('brandName',$brandName)->with('products',$product);
     }
 
 }

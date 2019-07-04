@@ -394,7 +394,7 @@
                     <div class="col-lg-4">
                         <div class="promotion-item">
                             <a href="product-details.html" class="promotion-img">
-                                <img src="{{asset('images/promotion/digital/img-3.jpg')}}" alt="image_not_found">
+                                <img src="{{asset('wb1.jpg')}}" alt="image_not_found">
                             </a>
                         </div>
                     </div>
@@ -450,7 +450,7 @@
                     <div class="col-lg-4">
                         <div class="promotion-item">
                             <a href="product-details.html" class="promotion-img">
-                                <img src="{{asset('images/promotion/digital/img-4.jpg')}}" alt="image_not_found">
+                                <img src="{{asset('wb2.jpg')}}" alt="image_not_found">
                             </a>
                         </div>
                     </div>
@@ -467,15 +467,17 @@
 
 
 
-
     <!-- promotion-banner-section - start
     ================================================== -->
     <section id="promotion-banner-section" class="promotion-banner-section clearfix">
-        <img src="{{asset('images/promotion/digital/big-banner-1.jpg')}}" alt="image_not_found">
+        <img src="{{asset('banner_bg.jpg')}}" alt="image_not_found">
         <div class="digital-banner-content">
 
             <div class="item-details">
-                <a href="#!" class="read-more"></a>
+
+                    <a  href="#!" class="read-more"></a>
+
+
                 <div class="details-bar">
                     <div class="image-container mb-15">
                         <img src="{{asset('images/promotion/img-2.jpg')}}" alt="image_not_found">
@@ -537,13 +539,13 @@
             </div>
 
             <div class="main-content">
-                <span>Curved HD TV</span>
-                <h2><strong>The Features you walt,</strong>All in one place</h2>
-                <p class="mb-15">
-                    The curved display has a curvature level equivalent to that of a circle,
-                    tracks the rounded shape os the eyes better
-                </p>
-                <a href="product-details.html" class="custom-btn bg-royal-blue">shop now</a>
+                {{--<span>Curved HD TV</span>--}}
+                {{--<h2><strong>The Features you walt,</strong>All in one place</h2>--}}
+                {{--<p class="mb-15">--}}
+                    {{--The curved display has a curvature level equivalent to that of a circle,--}}
+                    {{--tracks the rounded shape os the eyes better--}}
+                {{--</p>--}}
+                {{--<a href="product-details.html" class="custom-btn bg-royal-blue">shop now</a>--}}
             </div>
 
         </div>
